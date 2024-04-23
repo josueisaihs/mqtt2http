@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+MY_APPS = [
+    "app.mapping",
+]
+
 THIRD_PARTY_APPS = [
     'corsheaders',
     'rest_framework',
@@ -39,13 +43,14 @@ THIRD_PARTY_APPS = [
 ]
 
 INSTALLED_APPS = [
+    "jazzmin",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-] + THIRD_PARTY_APPS
+] + THIRD_PARTY_APPS + MY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mqtt2http.urls'
+ROOT_URLCONF = 'app.config.urls'
 
 TEMPLATES = [
     {
@@ -78,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mqtt2http.wsgi.application'
+WSGI_APPLICATION = 'app.config.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
