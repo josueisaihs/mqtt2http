@@ -8,29 +8,69 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mapping', '0001_initial'),
+        ("mapping", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Endpoint',
+            name="Endpoint",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='Name')),
-                ('description', models.TextField(blank=True, max_length=2500, null=True, verbose_name='Description')),
-                ('slug', autoslug.fields.AutoSlugField(always_update=True, editable=False, populate_from='name', unique=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated at')),
-                ('endpoint', models.CharField(max_length=1000, verbose_name='Endpoint')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=100, unique=True, verbose_name="Name"),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        blank=True,
+                        max_length=2500,
+                        null=True,
+                        verbose_name="Description",
+                    ),
+                ),
+                (
+                    "slug",
+                    autoslug.fields.AutoSlugField(
+                        always_update=True,
+                        editable=False,
+                        populate_from="name",
+                        unique=True,
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created at"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated at"),
+                ),
+                (
+                    "endpoint",
+                    models.CharField(max_length=1000, verbose_name="Endpoint"),
+                ),
             ],
             options={
-                'verbose_name': 'Endpoint',
-                'verbose_name_plural': 'Endpoints',
+                "verbose_name": "Endpoint",
+                "verbose_name_plural": "Endpoints",
             },
         ),
         migrations.AlterField(
-            model_name='mapping',
-            name='endpoint',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mapping.endpoint', verbose_name='Endpoint'),
+            model_name="mapping",
+            name="endpoint",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="mapping.endpoint",
+                verbose_name="Endpoint",
+            ),
         ),
     ]

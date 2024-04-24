@@ -11,9 +11,9 @@ class TestHTTPClient(TestCase):
             port=80,
             username="test",
             password="test",
-            description="This is a test HTTP client."
+            description="This is a test HTTP client.",
         )
-        
+
         self.assertEqual(http_client.name, "Test HTTP Client")
         self.assertEqual(http_client.host, "http://test.http.client")
         self.assertEqual(http_client.port, 80)

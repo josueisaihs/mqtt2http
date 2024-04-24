@@ -11,7 +11,7 @@ class TestMQTTBroker(TestCase):
             port=1883,
             username="test",
             password="test",
-            description="This is a test MQTT broker."
+            description="This is a test MQTT broker.",
         )
         self.assertEqual(mqtt_broker.name, "Test MQTT Broker")
         self.assertEqual(mqtt_broker.host, "test.mqtt.broker")

@@ -1,28 +1,25 @@
 from django.contrib import admin
 
-from .models import (
-    HTTPClient, 
-    MQTTBroker, 
-    TopicPattern, 
-    Mapping,
-    Endpoint
-)
+from .models import HTTPClient, MQTTBroker, TopicPattern, Mapping, Endpoint
+
 
 @admin.register(HTTPClient)
 class HTTPClientAdmin(admin.ModelAdmin):
-    list_display = ("slug", "name", "host", "port", "username", "password", "description")
+    list_display = (
+        "slug",
+        "name",
+        "host",
+        "port",
+        "username",
+        "password",
+        "description",
+    )
     search_fields = ("name", "host", "port", "username", "password", "description")
     ordering = ("name", "host", "port", "username", "password", "description")
     fieldsets = (
-        (None, {
-            "fields": ("name", ("host", "port", "method"))
-        }),
-        ("Authentication", {
-            "fields": [("username", "password")]
-        }),
-        ("Description", {
-            "fields": ("description",)
-        })
+        (None, {"fields": ("name", ("host", "port", "method"))}),
+        ("Authentication", {"fields": [("username", "password")]}),
+        ("Description", {"fields": ("description",)}),
     )
     readonly_fields = ("method",)
 
@@ -33,15 +30,9 @@ class MQTTBrokerAdmin(admin.ModelAdmin):
     search_fields = ("name", "host", "port", "username", "password", "description")
     ordering = ("name", "host", "port", "username", "password", "description")
     fieldsets = (
-        (None, {
-            "fields": ["name", ("host", "port")]
-        }),
-        ("Authentication", {
-            "fields": [("username", "password")]
-        }),
-        ("Description", {
-            "fields": ("description",)
-        })
+        (None, {"fields": ["name", ("host", "port")]}),
+        ("Authentication", {"fields": [("username", "password")]}),
+        ("Description", {"fields": ("description",)}),
     )
 
 
@@ -51,12 +42,8 @@ class TopicPatternAdmin(admin.ModelAdmin):
     search_fields = ("name", "pattern")
     ordering = ("name", "pattern")
     fieldsets = (
-        (None, {
-            "fields": ("name", "pattern")
-        }),
-        ("Description", {
-            "fields": ("description",)
-        })
+        (None, {"fields": ("name", "pattern")}),
+        ("Description", {"fields": ("description",)}),
     )
 
 
@@ -65,11 +52,7 @@ class EndpointAdmin(admin.ModelAdmin):
     list_display = ("name", "endpoint")
     search_fields = ("name", "endpoint")
     ordering = ("name", "endpoint")
-    fieldsets = (
-        (None, {
-            "fields": ("name", "endpoint")
-        }),
-    )
+    fieldsets = ((None, {"fields": ("name", "endpoint")}),)
 
 
 @admin.register(Mapping)
@@ -78,14 +61,24 @@ class MappingAdmin(admin.ModelAdmin):
     search_fields = ("topic_pattern", "mqtt_broker", "http_client", "endpoint")
     ordering = ("topic_pattern", "mqtt_broker", "http_client", "endpoint")
     fieldsets = (
-        (None, {
-            "fields": ("name",)
-        }),
-        ("Mapping", {
-            "fields": ("topic_pattern", "endpoint",)
-        }),
-        ("Configuration", {
-            "fields": ("mqtt_broker", "http_client",)
-        }),
+        (None, {"fields": ("name",)}),
+        (
+            "Mapping",
+            {
+                "fields": (
+                    "topic_pattern",
+                    "endpoint",
+                )
+            },
+        ),
+        (
+            "Configuration",
+            {
+                "fields": (
+                    "mqtt_broker",
+                    "http_client",
+                )
+            },
+        ),
     )
     readonly_fields = ("endpoint_url",)
