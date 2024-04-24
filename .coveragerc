@@ -2,10 +2,10 @@
 branch = true
 source = app/
 command_line=./manage.py test app
-omit = 
+omit =
     app/*/tests/*
     app/*/__init__.py
-    app/*/migration/*
+    app/*/migrations/*
     app/*/asgi.py
     app/*/wsgi.py
     app/*/settings/*

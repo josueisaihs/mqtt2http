@@ -1,9 +1,11 @@
+from typing import Iterable
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from autoslug import AutoSlugField
 
-from ..config.validators import validation_pattern
+from app.config.validators import validation_pattern
+from .managers import AbstractServerManager
 
 
 class AbstractModel(models.Model):
@@ -11,7 +13,7 @@ class AbstractModel(models.Model):
     description = models.TextField(
         _("Description"), max_length=2500, blank=True, null=True
     )
-    slug = AutoSlugField(
+    slug = AutoSlugField(  # type: ignore
         populate_from="name",
         unique=True,
         always_update=True,
@@ -34,9 +36,18 @@ class AbstractServerModel(AbstractModel):
     )
     username = models.CharField(_("Username"), max_length=100, blank=True, null=True)
     password = models.CharField(_("Password"), max_length=100, blank=True, null=True)
+    is_active = models.BooleanField(_("Is Active"), default=False)
+
+    objects = AbstractServerManager()
 
     class Meta:
         abstract = True
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            self.__class__.objects.inactive_other_servers()  # type: ignore
+
+        return super().save(*args, **kwargs)
 
 
 class MQTTBroker(AbstractServerModel):
@@ -99,10 +110,16 @@ class Mapping(AbstractModel):
         Endpoint, verbose_name=_("Endpoint"), on_delete=models.CASCADE
     )
     mqtt_broker = models.ForeignKey(
-        MQTTBroker, verbose_name=_("MQTT Broker"), on_delete=models.CASCADE
+        MQTTBroker,
+        verbose_name=_("MQTT Broker"),
+        on_delete=models.CASCADE,
+        limit_choices_to={"is_active": True},
     )
     http_client = models.ForeignKey(
-        HTTPClient, verbose_name=_("HTTP Client"), on_delete=models.CASCADE
+        HTTPClient,
+        verbose_name=_("HTTP Client"),
+        on_delete=models.CASCADE,
+        limit_choices_to={"is_active": True},
     )
 
     class Meta:

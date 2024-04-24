@@ -14,10 +14,10 @@ class HTTPClientAdmin(admin.ModelAdmin):
         "password",
         "description",
     )
-    search_fields = ("name", "host", "port", "username", "password", "description")
+    search_fields = ("name", "host", "port", "username", "password", "is_active")
     ordering = ("name", "host", "port", "username", "password", "description")
     fieldsets = (
-        (None, {"fields": ("name", ("host", "port", "method"))}),
+        (None, {"fields": ("name", ("host", "port"), "method", "is_active")}),
         ("Authentication", {"fields": [("username", "password")]}),
         ("Description", {"fields": ("description",)}),
     )
@@ -26,11 +26,11 @@ class HTTPClientAdmin(admin.ModelAdmin):
 
 @admin.register(MQTTBroker)
 class MQTTBrokerAdmin(admin.ModelAdmin):
-    list_display = ("name", "host", "port", "username", "password", "description")
+    list_display = ("name", "host", "port", "username", "password", "is_active")
     search_fields = ("name", "host", "port", "username", "password", "description")
     ordering = ("name", "host", "port", "username", "password", "description")
     fieldsets = (
-        (None, {"fields": ["name", ("host", "port")]}),
+        (None, {"fields": ["name", ("host", "port"), "is_active"]}),
         ("Authentication", {"fields": [("username", "password")]}),
         ("Description", {"fields": ("description",)}),
     )
